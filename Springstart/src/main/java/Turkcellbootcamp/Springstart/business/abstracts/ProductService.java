@@ -12,4 +12,5 @@ public interface ProductService {
     Product getById(short id);
     void update(short id, Product product);
     void  delete(short id);
+
 }

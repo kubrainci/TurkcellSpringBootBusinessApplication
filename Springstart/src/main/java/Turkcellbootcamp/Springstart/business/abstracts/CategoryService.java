@@ -8,9 +8,15 @@ import java.util.List;
 @Service
 
 public interface CategoryService {
-    Result add (Category category);
-    List<Category>getAll();
+    Result add(Category category);
+
+    List<Category> getAll();
+
     Category getById(int id);
-    void update(int id,Category category);
+
+    void update(int id, Category category);
+
     void delete(int id);
+
+   // Category findByCategoryName(String categoryName);
 }

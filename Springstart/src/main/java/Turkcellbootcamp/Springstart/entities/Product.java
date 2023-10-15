@@ -1,5 +1,6 @@
 package Turkcellbootcamp.Springstart.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,12 +23,6 @@ public class Product {
     @Column(name = "product_name")
     private String productName;
 
-    @Column(name = "supplier_id")
-    private short supplierId;
-
-    @Column(name = "category_id")
-    private int categoryId;
-
     @Column(name = "quantity_per_unit")
     private String quantityPerUnit;
 
@@ -49,6 +44,16 @@ public class Product {
     //Bağlantı noktası
     @OneToMany(mappedBy = "product")
     private List<OrderDetail>orderDetails;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @JsonIgnore
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "supplier_id")
+    @JsonIgnore
+    private Supplier supplier;
 
 
 }

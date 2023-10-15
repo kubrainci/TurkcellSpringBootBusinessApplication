@@ -50,10 +50,10 @@ public class Customer {
 
 
     //bağlantı kısmı
-   @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer")
     private List<Order>orders;
 
-   @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer")
     private  List<CustomerCustomerDemo>customerCustomerDemos;
 
 }

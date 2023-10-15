@@ -15,11 +15,13 @@ import java.util.List;
 
 public class CategoryController {
     private  final  CategoryService categoryService;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    public CategoryController(CategoryService categoryService) {
+    public CategoryController(CategoryService categoryService, CategoryRepository categoryRepository) {
 
         this.categoryService = categoryService;
+        this.categoryRepository = categoryRepository;
     }
     //İSTEKLER
     @GetMapping("getAll")
@@ -44,10 +46,46 @@ public class CategoryController {
         return new ResponseEntity("Kategori silindi.",HttpStatus.CREATED);
      }
 
-
      @PutMapping("update")
      public  ResponseEntity update(@RequestParam("id") int id,@RequestBody Category category){
         categoryService.update(id, category);
         return new ResponseEntity("Kategori güncellendi.",HttpStatus.CREATED);
      }
+
+
+    //  DERİVED QUERY METHODS
+
+      @GetMapping("getByCategoryName")
+    public Category getCategoriesByName(@RequestParam("name") String name) {
+        Category categories =categoryRepository.findByCategoryName(name);
+        return categories;
+    }
+    @GetMapping("getByName")
+    public List<Category> getCategoriesByNameContaining(@RequestParam("name") String name) {
+        List<Category> categories =categoryRepository.findByCategoryNameContaining(name);
+        return categories;
+
+    }
+    @GetMapping("search")
+   public List<Category>search (@RequestParam("name") String name){
+        List<Category>category=categoryRepository.search(name);
+        return category;
+   }
+   @GetMapping("getByOrderByCategoryNameAsc")
+   public List<Category>findByOrderByCategoryNameAsc(String categoryName){
+       List<Category>categories=categoryRepository.findByOrderByCategoryNameAsc(categoryName);
+       return categories;
+   }
+
+    @GetMapping("searchNative")
+    public List<Category>searchNative (@RequestParam("name") String name){
+        List<Category>category=categoryRepository.searchNative(name);
+        return category;
+    }
+    @GetMapping("getCountCategories")
+    public Integer getCountCategories(){
+        Integer countCategories = categoryRepository.countCategories();
+        return countCategories;
+    }
+
 }
