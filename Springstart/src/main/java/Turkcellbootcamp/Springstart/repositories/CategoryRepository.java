@@ -1,6 +1,9 @@
 package Turkcellbootcamp.Springstart.repositories;
 
+
+
 import Turkcellbootcamp.Springstart.entities.Category;
+import Turkcellbootcamp.Springstart.entities.dtos.CategoryForListingDto;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
@@ -29,10 +32,28 @@ public interface CategoryRepository extends JpaRepository<Category,Integer> {
 
     //Native SQL
     // --->categoryName 'nin tamamını iste
+
     @Query(value = "SELECT * FROM Categories c WHERE c.category_name =:categoryName%", nativeQuery = true)
     List<Category> searchNative(String categoryName);
     @Query(value = "SELECT COUNT(*) FROM categories", nativeQuery = true)
     Integer countCategories();
 
+    /*"Select new " +
+            "com.turkcell.workshop.entities.dtos.CategoryForListingDto(c.categoryId,c.categoryName) From Category c")
+    List<CategoryForListingDto> getForListing();
+*/
+
+    //DTO'YU KULLANMAK İÇİN JPQL OLUŞTURUYORUZ
+     @Query(value = "Select new"+
+             " Turkcellbootcamp.Springstart.entities.dtos.CategoryForListingDto(c.categoryId,c.categoryName)From Category c")
+     List<CategoryForListingDto>getForListing();
+
+
+
 
 }
+
+
+
+
+

@@ -1,16 +1,22 @@
 package Turkcellbootcamp.Springstart.business.abstracts;
 
+
 import Turkcellbootcamp.Springstart.entities.Category;
+import Turkcellbootcamp.Springstart.entities.dtos.CategoryForListingDto;
 import org.springframework.stereotype.Service;
 
 import javax.xml.transform.Result;
 import java.util.List;
+
 @Service
 
 public interface CategoryService {
+
+    //SERVİSLER DTOLARLA İLİŞKİ KURMALIDIR
     Result add(Category category);
 
-    List<Category> getAll();
+    List<CategoryForListingDto>getAll();
+
 
     Category getById(int id);
 

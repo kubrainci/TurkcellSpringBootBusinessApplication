@@ -2,6 +2,8 @@ package Turkcellbootcamp.Springstart.controlleres;
 
 import Turkcellbootcamp.Springstart.business.abstracts.CategoryService;
 import Turkcellbootcamp.Springstart.entities.Category;
+import Turkcellbootcamp.Springstart.entities.dtos.CategoryForAddDto;
+import Turkcellbootcamp.Springstart.entities.dtos.CategoryForListingDto;
 import Turkcellbootcamp.Springstart.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,10 +27,12 @@ public class CategoryController {
     }
     //İSTEKLER
     @GetMapping("getAll")
-    public List<Category> getAll(){
+    public List<CategoryForListingDto> getAll(){
 
         return categoryService.getAll();
     }
+
+
      @GetMapping("getById")
     public Category getCategoryById(@RequestParam ("id") int id){
 
@@ -36,8 +40,11 @@ public class CategoryController {
     }
 
      @PostMapping("add")
-     public ResponseEntity add(@RequestBody Category category){
-        this.categoryService.add(category);
+     public ResponseEntity add(@RequestBody CategoryForAddDto categoryForAddDto){
+        Category category=new Category();
+        category.setCategoryName(categoryForAddDto.getCategoryName());
+        category.setDescription(categoryForAddDto.getDescription());
+        categoryService.add(category);
         return new ResponseEntity("Kategori eklendi ", HttpStatus.CREATED);
      }
      @DeleteMapping("delete")
@@ -55,7 +62,7 @@ public class CategoryController {
 
     //  DERİVED QUERY METHODS
 
-      @GetMapping("getByCategoryName")
+    @GetMapping("getByCategoryName")
     public Category getCategoriesByName(@RequestParam("name") String name) {
         Category categories =categoryRepository.findByCategoryName(name);
         return categories;
@@ -66,17 +73,20 @@ public class CategoryController {
         return categories;
 
     }
+
+    //JPQL
     @GetMapping("search")
-   public List<Category>search (@RequestParam("name") String name){
+    public List<Category>search (@RequestParam("name") String name){
         List<Category>category=categoryRepository.search(name);
         return category;
-   }
-   @GetMapping("getByOrderByCategoryNameAsc")
-   public List<Category>findByOrderByCategoryNameAsc(String categoryName){
-       List<Category>categories=categoryRepository.findByOrderByCategoryNameAsc(categoryName);
-       return categories;
-   }
+    }
+    @GetMapping("getByOrderByCategoryNameAsc")
+    public List<Category>findByOrderByCategoryNameAsc(String categoryName){
+        List<Category>categories=categoryRepository.findByOrderByCategoryNameAsc(categoryName);
+        return categories;
+    }
 
+    //NATİVE SQL
     @GetMapping("searchNative")
     public List<Category>searchNative (@RequestParam("name") String name){
         List<Category>category=categoryRepository.searchNative(name);
@@ -84,8 +94,10 @@ public class CategoryController {
     }
     @GetMapping("getCountCategories")
     public Integer getCountCategories(){
-        Integer countCategories = categoryRepository.countCategories();
+        Integer countCategories=categoryRepository.countCategories();
         return countCategories;
     }
+
+
 
 }

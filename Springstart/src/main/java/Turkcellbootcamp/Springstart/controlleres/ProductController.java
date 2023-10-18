@@ -2,6 +2,7 @@ package Turkcellbootcamp.Springstart.controlleres;
 
 import Turkcellbootcamp.Springstart.business.abstracts.ProductService;
 import Turkcellbootcamp.Springstart.entities.Product;
+import Turkcellbootcamp.Springstart.entities.dtos.*;
 import Turkcellbootcamp.Springstart.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,35 +25,55 @@ public class ProductController {
     }
 
     @GetMapping("getAll")
-    public List<Product>getAll(){
+    public List<ProductForListingDto> getAll() {
 
         return productService.getAll();
     }
 
-    @GetMapping("getById")
-    public Product getProductId (@RequestParam short id){
 
-        return productService.getById(id);
-    }
+
+    @GetMapping("getById")
+  public ProductForGetByIdDto getById(@RequestParam short id){
+
+      return productService.getById(id);
+  }
+
 
     @PutMapping("update")
-    public ResponseEntity update(@RequestParam("id") short id ,@RequestBody Product product){
+    public ResponseEntity update(@RequestParam("id") short id , @RequestBody ProductForUpdateDto productForUpdateDto){
+        Product product=new Product();
+        product.setProductName(productForUpdateDto.getProductName());
+        product.setQuantityPerUnit(productForUpdateDto.getQuantityPerUnit());
+        product.setUnitPrice(productForUpdateDto.getUnitPrice());
+        product.setUnitsInStock(productForUpdateDto.getUnitsInStock());
+        product.setUnitsOnOrder(productForUpdateDto.getUnitsOnOrder());
+        product.setDiscontinued(0);
         productService.update(id,product);
         return new ResponseEntity("Ürün güncellendi.",HttpStatus.CREATED);
 
     }
-    @PostMapping("add")
-    public ResponseEntity add(@RequestBody Product product){
-        productService.add(product);
-        return  new ResponseEntity("Ürün eklendi", HttpStatus.CREATED);
 
+    @PostMapping("add")
+    public ResponseEntity add(@RequestBody ProductForAddDto productForAddDto){
+        //Manuel Mappleme
+       Product product=new Product();
+       product.setProductName(productForAddDto.getProductName());
+       product.setQuantityPerUnit(productForAddDto.getQuantityPerUnit());
+       product.setUnitPrice(productForAddDto.getUnitPrice());
+       product.setUnitsInStock(productForAddDto.getUnitsInStock());
+       product.setUnitsOnOrder(productForAddDto.getUnitsOnOrder());
+       product.setDiscontinued(0);
+       productService.add(product);
+       return  new ResponseEntity("Ürün eklendi", HttpStatus.CREATED);
     }
     @DeleteMapping("delete")
-    public ResponseEntity delete(@RequestParam short id){
+    public ResponseEntity delete(@RequestBody ProductForDeleteDto productForDeleteDto){
+        short id=productForDeleteDto.getProductId();
         productService.delete(id);
         return new ResponseEntity("Ürün silindi",HttpStatus.CREATED);
     }
 
+    //DERİVED QUERY METHODS
     @GetMapping("findByProductNameContaining")
     public List<Product> findByProductNameContaining(String name) {
         return productRepository.findByProductNameContaining(name);
@@ -60,8 +81,8 @@ public class ProductController {
 
     @GetMapping("findByUnitPriceLessThan")
     public List<Product>findByUnitPriceLessThan(float unitPrice){
-      List<Product>products= productRepository.findByUnitPriceLessThan(unitPrice);
-         return products;
+        List<Product>products= productRepository.findByUnitPriceLessThan(unitPrice);
+        return products;
     }
     @GetMapping("findByUnitsInStockGreaterThan")
     public List<Product>findByUnitsInStockGreaterThan(short unitsInStock){
@@ -70,7 +91,7 @@ public class ProductController {
 
     }
 
-
+    //JPQL
     @GetMapping("getByProductOrderByProductNameAsc")
     public List<Product>findByProductOrderByProductNameAsc(String productName){
         List<Product>products=productRepository.findByProductOrderByProductNameAsc(productName);
@@ -88,6 +109,8 @@ public class ProductController {
         List<Product> products=productRepository.findProductsByUnitsOnOrderZero(unitsOnOrder);
         return products;
     }
+
+    //NATİVE SQL
     @GetMapping("searchProductName")
     public  List<Product>searchProductName(String productName){
         List<Product>products=productRepository.searchProductName( productName);

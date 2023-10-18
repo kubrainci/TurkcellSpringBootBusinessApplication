@@ -2,6 +2,8 @@ package Turkcellbootcamp.Springstart.business.concretes;
 
 import Turkcellbootcamp.Springstart.business.abstracts.ProductService;
 import Turkcellbootcamp.Springstart.entities.Product;
+import Turkcellbootcamp.Springstart.entities.dtos.ProductForGetByIdDto;
+import Turkcellbootcamp.Springstart.entities.dtos.ProductForListingDto;
 import Turkcellbootcamp.Springstart.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,16 +29,17 @@ public class ProductManager implements ProductService {
     }
 
     @Override
-    public List<Product>getAll(){
+    public List<ProductForListingDto> getAll() {
 
-        return productRepository.findAll();
+        return productRepository.getForListing();
     }
 
     @Override
-    public Product getById(short id) {
-        Product product=productRepository.findById(id).orElseThrow();
-        return product;
+    public ProductForGetByIdDto getById(short id) {
+        ProductForGetByIdDto productForGetByIdDto=productRepository.getByIdDto(id);
+        return productForGetByIdDto;
     }
+
 
     @Override
     public void update(short id, Product product) {
