@@ -4,6 +4,7 @@ import Turkcellbootcamp.Springstart.business.abstracts.ProductService;
 import Turkcellbootcamp.Springstart.entities.Product;
 import Turkcellbootcamp.Springstart.entities.dtos.*;
 import Turkcellbootcamp.Springstart.repositories.ProductRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class ProductController {
 
 
     @PutMapping("update")
-    public ResponseEntity update(@RequestParam("id") short id , @RequestBody ProductForUpdateDto productForUpdateDto){
+    public ResponseEntity update(@RequestParam("id") short id , @RequestBody @Valid ProductForUpdateDto productForUpdateDto){
         Product product=new Product();
         product.setProductName(productForUpdateDto.getProductName());
         product.setQuantityPerUnit(productForUpdateDto.getQuantityPerUnit());
@@ -53,9 +54,10 @@ public class ProductController {
 
     }
 
-    @PostMapping("add")
-    public ResponseEntity add(@RequestBody ProductForAddDto productForAddDto){
+    /*@PostMapping("add")
+    public ResponseEntity add(@RequestBody @Valid ProductForAddDto productForAddDto){
         //Manuel Mappleme
+
        Product product=new Product();
        product.setProductName(productForAddDto.getProductName());
        product.setQuantityPerUnit(productForAddDto.getQuantityPerUnit());
@@ -63,8 +65,13 @@ public class ProductController {
        product.setUnitsInStock(productForAddDto.getUnitsInStock());
        product.setUnitsOnOrder(productForAddDto.getUnitsOnOrder());
        product.setDiscontinued(0);
-       productService.add(product);
+       productService.add(productForAddDto);
        return  new ResponseEntity("Ürün eklendi", HttpStatus.CREATED);
+    }*/
+    @PostMapping("add")
+    public ResponseEntity<String> addProductDto(@RequestBody @Valid ProductForAddDto productForAddDtoDto) {
+        productService.add(productForAddDtoDto);
+        return ResponseEntity.ok("Ürün başarıyla eklendi.");
     }
     @DeleteMapping("delete")
     public ResponseEntity delete(@RequestBody ProductForDeleteDto productForDeleteDto){
@@ -74,17 +81,27 @@ public class ProductController {
     }
 
     //DERİVED QUERY METHODS
-    @GetMapping("findByProductNameContaining")
+    @GetMapping("getByProductNameContaining")
     public List<Product> findByProductNameContaining(String name) {
         return productRepository.findByProductNameContaining(name);
     }
+    /* @GetMapping("getByCategoryName")
+    public Category getCategoriesByName(@RequestParam("name") String name) {
+        Category categories =categoryRepository.findByCategoryName(name);
+        return categories;
+    }*/
+    @GetMapping("getByProductName")
+    public Product getProductsByName(@RequestParam("name")String name){
+        Product products=productRepository.findByProductName(name);
+        return products;
+    }
 
-    @GetMapping("findByUnitPriceLessThan")
+    @GetMapping("getByUnitPriceLessThan")
     public List<Product>findByUnitPriceLessThan(float unitPrice){
         List<Product>products= productRepository.findByUnitPriceLessThan(unitPrice);
         return products;
     }
-    @GetMapping("findByUnitsInStockGreaterThan")
+    @GetMapping("getByUnitsInStockGreaterThan")
     public List<Product>findByUnitsInStockGreaterThan(short unitsInStock){
         List<Product>products=productRepository.findByUnitsInStockGreaterThan(unitsInStock);
         return products;

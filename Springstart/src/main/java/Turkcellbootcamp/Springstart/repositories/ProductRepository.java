@@ -1,5 +1,6 @@
 package Turkcellbootcamp.Springstart.repositories;
 
+import Turkcellbootcamp.Springstart.entities.Category;
 import Turkcellbootcamp.Springstart.entities.Product;
 import Turkcellbootcamp.Springstart.entities.dtos.ProductForGetByIdDto;
 import Turkcellbootcamp.Springstart.entities.dtos.ProductForListingDto;
@@ -21,6 +22,7 @@ public interface ProductRepository extends JpaRepository<Product,Short> {
  //UnitsInStock'dan daha büyük olanları listele
  List<Product>findByUnitsInStockGreaterThan(short unitsInStock);
 
+  Product findByProductName(String productName);
  //JPQL
 
  //ProductName leri a dan z ye doğru sırala

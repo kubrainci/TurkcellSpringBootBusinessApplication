@@ -2,6 +2,7 @@ package Turkcellbootcamp.Springstart.business.abstracts;
 
 
 import Turkcellbootcamp.Springstart.entities.Category;
+import Turkcellbootcamp.Springstart.entities.dtos.CategoryForAddDto;
 import Turkcellbootcamp.Springstart.entities.dtos.CategoryForListingDto;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +14,9 @@ import java.util.List;
 public interface CategoryService {
 
     //SERVİSLER DTOLARLA İLİŞKİ KURMALIDIR
-    Result add(Category category);
-
-    List<CategoryForListingDto>getAll();
+    //Result add(Category category);
+     void add(CategoryForAddDto categoryForAddDto);
+     List<CategoryForListingDto>getAll();
 
 
     Category getById(int id);
