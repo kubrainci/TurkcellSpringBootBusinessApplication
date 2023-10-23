@@ -1,6 +1,5 @@
-package Turkcellbootcamp.Springstart;
+package Turkcellbootcamp.Springstart.core.exceptions;
 
-import Turkcellbootcamp.Springstart.business.exceptions.BusinessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;

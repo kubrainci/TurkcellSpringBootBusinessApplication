@@ -2,7 +2,7 @@ package Turkcellbootcamp.Springstart.controlleres;
 
 import Turkcellbootcamp.Springstart.business.abstracts.ProductService;
 import Turkcellbootcamp.Springstart.entities.Product;
-import Turkcellbootcamp.Springstart.entities.dtos.*;
+import Turkcellbootcamp.Springstart.entities.dtos.ProductDtos.*;
 import Turkcellbootcamp.Springstart.repositories.ProductRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,25 +49,12 @@ public class ProductController {
         product.setUnitsInStock(productForUpdateDto.getUnitsInStock());
         product.setUnitsOnOrder(productForUpdateDto.getUnitsOnOrder());
         product.setDiscontinued(0);
-        productService.update(id,product);
+        productService.update(id,productForUpdateDto);
         return new ResponseEntity("Ürün güncellendi.",HttpStatus.CREATED);
 
     }
 
-    /*@PostMapping("add")
-    public ResponseEntity add(@RequestBody @Valid ProductForAddDto productForAddDto){
-        //Manuel Mappleme
 
-       Product product=new Product();
-       product.setProductName(productForAddDto.getProductName());
-       product.setQuantityPerUnit(productForAddDto.getQuantityPerUnit());
-       product.setUnitPrice(productForAddDto.getUnitPrice());
-       product.setUnitsInStock(productForAddDto.getUnitsInStock());
-       product.setUnitsOnOrder(productForAddDto.getUnitsOnOrder());
-       product.setDiscontinued(0);
-       productService.add(productForAddDto);
-       return  new ResponseEntity("Ürün eklendi", HttpStatus.CREATED);
-    }*/
     @PostMapping("add")
     public ResponseEntity<String> addProductDto(@RequestBody @Valid ProductForAddDto productForAddDtoDto) {
         productService.add(productForAddDtoDto);

@@ -2,9 +2,9 @@ package Turkcellbootcamp.Springstart.controlleres;
 
 import Turkcellbootcamp.Springstart.business.abstracts.CategoryService;
 import Turkcellbootcamp.Springstart.entities.Category;
-import Turkcellbootcamp.Springstart.entities.dtos.CategoryForAddDto;
-import Turkcellbootcamp.Springstart.entities.dtos.CategoryForListingDto;
-import Turkcellbootcamp.Springstart.entities.dtos.CategoryForUpdateDto;
+import Turkcellbootcamp.Springstart.entities.dtos.CategoryDtos.CategoryForAddDto;
+import Turkcellbootcamp.Springstart.entities.dtos.CategoryDtos.CategoryForListingDto;
+import Turkcellbootcamp.Springstart.entities.dtos.CategoryDtos.CategoryForUpdateDto;
 import Turkcellbootcamp.Springstart.repositories.CategoryRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,10 +43,8 @@ public class CategoryController {
 
      @PostMapping("add")
      public ResponseEntity add(@RequestBody @Valid CategoryForAddDto categoryForAddDto){
-        Category category=new Category();
-        category.setCategoryName(categoryForAddDto.getCategoryName());
-        category.setDescription(categoryForAddDto.getDescription());
-        categoryService.add(categoryForAddDto);
+
+             categoryService.add(categoryForAddDto);
 
         return new ResponseEntity("Kategori eklendi ", HttpStatus.CREATED);
      }
@@ -58,10 +56,7 @@ public class CategoryController {
 
      @PutMapping("update")
      public  ResponseEntity update(@RequestParam("id") int id, @RequestBody @Valid CategoryForUpdateDto categoryForUpdateDto){
-        Category category=new Category();
-        category.setCategoryName(categoryForUpdateDto.getCategoryName());
-        category.setDescription(categoryForUpdateDto.getDescription());
-        categoryService.update(id,category);
+        categoryService.update(categoryForUpdateDto);
         return new ResponseEntity("Kategori güncellendi.",HttpStatus.CREATED);
      }
 

@@ -1,13 +1,12 @@
 package Turkcellbootcamp.Springstart.business.abstracts;
 
 import Turkcellbootcamp.Springstart.entities.Product;
-import Turkcellbootcamp.Springstart.entities.dtos.CategoryForAddDto;
-import Turkcellbootcamp.Springstart.entities.dtos.ProductForAddDto;
-import Turkcellbootcamp.Springstart.entities.dtos.ProductForGetByIdDto;
-import Turkcellbootcamp.Springstart.entities.dtos.ProductForListingDto;
+import Turkcellbootcamp.Springstart.entities.dtos.ProductDtos.ProductForAddDto;
+import Turkcellbootcamp.Springstart.entities.dtos.ProductDtos.ProductForGetByIdDto;
+import Turkcellbootcamp.Springstart.entities.dtos.ProductDtos.ProductForListingDto;
+import Turkcellbootcamp.Springstart.entities.dtos.ProductDtos.ProductForUpdateDto;
 import org.springframework.stereotype.Service;
 
-import javax.xml.transform.Result;
 import java.util.List;
 @Service
 public interface ProductService {
@@ -19,7 +18,7 @@ public interface ProductService {
   //  Product getById(short id);
     ProductForGetByIdDto getById(short id);
 
-    void update(short id, Product product);
+    void update(short id, ProductForUpdateDto productForUpdateDto);
     void  delete(short id);
 
 }

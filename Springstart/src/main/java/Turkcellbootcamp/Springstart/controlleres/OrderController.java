@@ -2,6 +2,8 @@ package Turkcellbootcamp.Springstart.controlleres;
 
 import Turkcellbootcamp.Springstart.business.abstracts.OrderService;
 import Turkcellbootcamp.Springstart.entities.Order;
+import Turkcellbootcamp.Springstart.entities.dtos.OrderDtos.OrderForAddDto;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +41,8 @@ public class OrderController {
 
     }
     @PostMapping("add")
-    public ResponseEntity add(@RequestBody Order order){
-       orderService.add(order);
+    public ResponseEntity add(@RequestBody @Valid OrderForAddDto orderForAddDto){
+       orderService.add(orderForAddDto);
        return new ResponseEntity("Şipariş eklendi",HttpStatus.CREATED);
 
     }

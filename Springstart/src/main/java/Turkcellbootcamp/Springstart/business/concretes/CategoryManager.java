@@ -1,10 +1,11 @@
 package Turkcellbootcamp.Springstart.business.concretes;
 
 import Turkcellbootcamp.Springstart.business.abstracts.CategoryService;
-import Turkcellbootcamp.Springstart.business.exceptions.BusinessException;
+import Turkcellbootcamp.Springstart.core.exceptions.BusinessException;
 import Turkcellbootcamp.Springstart.entities.Category;
-import Turkcellbootcamp.Springstart.entities.dtos.CategoryForAddDto;
-import Turkcellbootcamp.Springstart.entities.dtos.CategoryForListingDto;
+import Turkcellbootcamp.Springstart.entities.dtos.CategoryDtos.CategoryForAddDto;
+import Turkcellbootcamp.Springstart.entities.dtos.CategoryDtos.CategoryForListingDto;
+import Turkcellbootcamp.Springstart.entities.dtos.CategoryDtos.CategoryForUpdateDto;
 import Turkcellbootcamp.Springstart.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,14 +43,6 @@ public class CategoryManager implements CategoryService {
 
     }
 
-    @Override
-    public void update(int id, Category category) {
-        Category c=categoryRepository.getReferenceById(id);
-        c.setCategoryName(category.getCategoryName());
-        c.setDescription(category.getDescription());
-        categoryRepository.save(c);
-
-    }
 
     @Override
     public void delete(int id) {
@@ -64,13 +57,15 @@ public class CategoryManager implements CategoryService {
 
         categoryWithSameNameShouldNotExist(categoryForAddDto.getCategoryName());
         categoryNameLengthExceeded(categoryForAddDto.getCategoryName(),50);
-        Category category = new Category();
-        category.setCategoryName(categoryForAddDto.getCategoryName());
-        category.setDescription(categoryForAddDto.getDescription());
+        Category category = Category.builder()
+                .categoryName(categoryForAddDto.getCategoryName())
+                .description(categoryForAddDto.getDescription())
+                .build();
         categoryRepository.save(category);
 
         // Mapleme işlemi business içerisinde olmalıdır
     }
+
 
     private void categoryNameLengthExceeded(String categoryName, int maxLength) {
         if (categoryName.length()>=maxLength){
@@ -85,7 +80,20 @@ public class CategoryManager implements CategoryService {
         }
     }
 
+    @Override
+    public void update(CategoryForUpdateDto categoryForUpdateDto) {
+        Category categoryToUpdate=returnCategoryByIdIfExist(categoryForUpdateDto.getCategoryId());
+        categoryToUpdate.setCategoryName(categoryToUpdate.getCategoryName());
+        categoryToUpdate.setDescription(categoryToUpdate.getDescription());
+        categoryRepository.save(categoryToUpdate);
+    }
 
+    private Category returnCategoryByIdIfExist(int categoryId) {
+        Category category=categoryRepository.findById(categoryId).orElse(null);
+        if (category==null)
+            throw new BusinessException("Böyle bir kategori bulunamadı.");
+        return category;
+    }
 
 
 }

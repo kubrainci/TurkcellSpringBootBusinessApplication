@@ -3,7 +3,7 @@ package Turkcellbootcamp.Springstart.repositories;
 
 
 import Turkcellbootcamp.Springstart.entities.Category;
-import Turkcellbootcamp.Springstart.entities.dtos.CategoryForListingDto;
+import Turkcellbootcamp.Springstart.entities.dtos.CategoryDtos.CategoryForListingDto;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
@@ -45,7 +45,7 @@ public interface CategoryRepository extends JpaRepository<Category,Integer> {
 
     //DTO'YU KULLANMAK İÇİN JPQL OLUŞTURUYORUZ
      @Query(value = "Select new"+
-             " Turkcellbootcamp.Springstart.entities.dtos.CategoryForListingDto(c.categoryId,c.categoryName)From Category c")
+             " Turkcellbootcamp.Springstart.entities.dtos.CategoryDtos.CategoryForListingDto(c.categoryId,c.categoryName)From Category c")
      List<CategoryForListingDto>getForListing();
 
 

@@ -1,9 +1,8 @@
 package Turkcellbootcamp.Springstart.repositories;
 
-import Turkcellbootcamp.Springstart.entities.Category;
 import Turkcellbootcamp.Springstart.entities.Product;
-import Turkcellbootcamp.Springstart.entities.dtos.ProductForGetByIdDto;
-import Turkcellbootcamp.Springstart.entities.dtos.ProductForListingDto;
+import Turkcellbootcamp.Springstart.entities.dtos.ProductDtos.ProductForGetByIdDto;
+import Turkcellbootcamp.Springstart.entities.dtos.ProductDtos.ProductForListingDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -53,10 +52,10 @@ public interface ProductRepository extends JpaRepository<Product,Short> {
  //productta orderdetailse one to many ile bağlantısı olduğundan INNER JOİN kullan
 
         @Query("SELECT new " +
-         "Turkcellbootcamp.Springstart.entities.dtos.ProductForListingDto(p.productId, p.productName,p.unitPrice, p.quantityPerUnit, p.unitsInStock, p.unitsOnOrder, p.discontinued, od.quantity, od.discount) FROM Product p INNER JOIN p.orderDetails od")
+         "Turkcellbootcamp.Springstart.entities.dtos.ProductDtos.ProductForListingDto(p.productId, p.productName,p.unitPrice, p.quantityPerUnit, p.unitsInStock, p.unitsOnOrder, p.discontinued, od.quantity, od.discount) FROM Product p INNER JOIN p.orderDetails od")
         List<ProductForListingDto> getForListing();
        @Query(value = "Select new " +
-         "Turkcellbootcamp.Springstart.entities.dtos.ProductForGetByIdDto(p.productId,p.unitPrice,p.productName,p.quantityPerUnit,p.unitsInStock,p.unitsOnOrder,p.reorderLevel) from Product p WHERE productId = :productId")
+         "Turkcellbootcamp.Springstart.entities.dtos.ProductDtos.ProductForGetByIdDto(p.productId,p.unitPrice,p.productName,p.quantityPerUnit,p.unitsInStock,p.unitsOnOrder,p.reorderLevel) from Product p WHERE productId = :productId")
        ProductForGetByIdDto getByIdDto(short productId);
 
 }

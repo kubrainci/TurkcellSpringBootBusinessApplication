@@ -1,26 +1,21 @@
-package Turkcellbootcamp.Springstart.entities.dtos;
+package Turkcellbootcamp.Springstart.entities.dtos.ProductDtos;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
-public class ProductForListingDto {
+@Builder
+public class ProductForGetByIdDto {
 
     private short productId;
+    private float unitPrice;
     private String productName;
     private String quantityPerUnit;
-    private float unitPrice;
     private short unitsInStock;
     private short unitsOnOrder;
-    private int discontinued;
     private short reorderLevel;
-
-    private short quantity;
-    private float discount;
-
-
 }

@@ -3,6 +3,7 @@ package Turkcellbootcamp.Springstart.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "orders")
-
+@Builder
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +29,7 @@ public class Order {
     private LocalDate requiredDate;
 
     @Column(name = "shipped_date")
-    private LocalDate shipped_date;
+    private LocalDate shippedDate;
 
     @Column(name = "freight")
     private float freight;

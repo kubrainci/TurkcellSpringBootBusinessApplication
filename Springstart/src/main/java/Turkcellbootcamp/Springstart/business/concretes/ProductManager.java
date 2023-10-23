@@ -1,17 +1,16 @@
 package Turkcellbootcamp.Springstart.business.concretes;
 
 import Turkcellbootcamp.Springstart.business.abstracts.ProductService;
-import Turkcellbootcamp.Springstart.business.exceptions.BusinessException;
-import Turkcellbootcamp.Springstart.entities.Category;
+import Turkcellbootcamp.Springstart.core.exceptions.BusinessException;
 import Turkcellbootcamp.Springstart.entities.Product;
-import Turkcellbootcamp.Springstart.entities.dtos.ProductForAddDto;
-import Turkcellbootcamp.Springstart.entities.dtos.ProductForGetByIdDto;
-import Turkcellbootcamp.Springstart.entities.dtos.ProductForListingDto;
+import Turkcellbootcamp.Springstart.entities.dtos.ProductDtos.ProductForAddDto;
+import Turkcellbootcamp.Springstart.entities.dtos.ProductDtos.ProductForGetByIdDto;
+import Turkcellbootcamp.Springstart.entities.dtos.ProductDtos.ProductForListingDto;
+import Turkcellbootcamp.Springstart.entities.dtos.ProductDtos.ProductForUpdateDto;
 import Turkcellbootcamp.Springstart.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.transform.Result;
 import java.util.List;
 
 @Service
@@ -43,15 +42,20 @@ public class ProductManager implements ProductService {
         return productForGetByIdDto;
     }
 
-
     @Override
+    public void update(short id, ProductForUpdateDto productForUpdateDto) {
+
+    }
+
+
+  /*  @Override
     public void update(short id, Product product) {
         Product p =productRepository.findById(id).orElseThrow();
         p.setProductName(product.getProductName());
         p.setDiscontinued(product.getDiscontinued());
         productRepository.save(p);
 
-    }
+    }*/
 
     @Override
     public void delete(short id) {
@@ -62,15 +66,14 @@ public class ProductManager implements ProductService {
     @Override
     public void add(ProductForAddDto productForAddDto) {
        productNameMustBeUnique(productForAddDto.getProductName());
-       Product product=new Product();
-       product.setProductName(productForAddDto.getProductName());
-       product.setQuantityPerUnit(productForAddDto.getQuantityPerUnit());
+       Product product=Product.builder()
+               .productName(productForAddDto.getProductName())
+               .quantityPerUnit(productForAddDto.getQuantityPerUnit())
+               .build();
+        productRepository.save(product);
 
     }
-   /*Category categoryWithSameName = categoryRepository.findByCategoryName(categoryName);
-        if(categoryWithSameName != null){
-            throw new BusinessException("Aynı kategori isminden iki kategori bulunamaz.Kategori isimleri benzersiz olmalıdır.");
-        }*/
+   
     private void productNameMustBeUnique(String productName) {
         Product productNameMustBeUnique=productRepository.findByProductName(productName);
         if (productNameMustBeUnique != null){

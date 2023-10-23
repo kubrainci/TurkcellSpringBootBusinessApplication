@@ -1,4 +1,4 @@
-package Turkcellbootcamp.Springstart.business.exceptions;
+package Turkcellbootcamp.Springstart.core.exceptions;
 
 public class BusinessException extends RuntimeException {
 
