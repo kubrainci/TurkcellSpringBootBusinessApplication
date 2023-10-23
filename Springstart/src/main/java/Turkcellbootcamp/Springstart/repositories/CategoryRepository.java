@@ -2,7 +2,7 @@ package Turkcellbootcamp.Springstart.repositories;
 
 
 
-import Turkcellbootcamp.Springstart.entities.Category;
+import Turkcellbootcamp.Springstart.entities.concretes.Category;
 import Turkcellbootcamp.Springstart.entities.dtos.CategoryDtos.CategoryForListingDto;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;

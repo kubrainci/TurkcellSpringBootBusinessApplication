@@ -4,14 +4,16 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.context.MessageSource;
 
 @Data
 @Builder
 public class CategoryForAddDto {
 
-    @NotBlank(message = "Kategori ismi boş bırakılamaz.")
-    @Size(min = 4,message = "Kategori ismi 4 haneden küçük olamaz.")
+
+    @NotBlank(message = "{categoryNameCannotBeLeftBlank}")
+    @Size(min = 4,message = "{categoryNameCannotBeSmallerThanFourDigits}")
     private String categoryName;
-    @NotBlank(message = "Açıklama alanı boş bırakılamaz.")
+    @NotBlank(message = "{descriptionFieldCannotBeLeftBlank}")
     private String description;
 }

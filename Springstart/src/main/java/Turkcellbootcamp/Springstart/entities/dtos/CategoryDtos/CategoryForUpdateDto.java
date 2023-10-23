@@ -14,9 +14,9 @@ public class CategoryForUpdateDto {
 
     @NotNull
     private int categoryId;
-    @NotBlank(message = "Kategori ismi boş bırakılamaz.")
-    @Size(min = 5,message = "Kategori ismi güncellenirken 5 haneden küçük olmaz.")
+    @NotBlank(message = "{categoryNameCannotBeLeftBlank}")
+    @Size(min = 5,message = "{updatingTheCategoryNameItCannotBeLessThanFiveDigits}")
     private String categoryName;
-    @NotBlank(message = "Açıklama boş bırakılamaz,lütfen açıklama yapınız.")
+    @NotBlank(message = "{descriptionFieldCannotBeLeftBlank}")
     private String description;
 }

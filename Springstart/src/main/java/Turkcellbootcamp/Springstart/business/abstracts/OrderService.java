@@ -1,6 +1,6 @@
 package Turkcellbootcamp.Springstart.business.abstracts;
 
-import Turkcellbootcamp.Springstart.entities.Order;
+import Turkcellbootcamp.Springstart.entities.concretes.Order;
 import Turkcellbootcamp.Springstart.entities.dtos.OrderDtos.OrderForAddDto;
 import org.springframework.stereotype.Service;
 

@@ -1,11 +1,14 @@
 package Turkcellbootcamp.Springstart.controlleres;
 
 import Turkcellbootcamp.Springstart.business.abstracts.ProductService;
-import Turkcellbootcamp.Springstart.entities.Product;
+import Turkcellbootcamp.Springstart.entities.concretes.Product;
 import Turkcellbootcamp.Springstart.entities.dtos.ProductDtos.*;
 import Turkcellbootcamp.Springstart.repositories.ProductRepository;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,16 +17,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("product")
+@RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
     private final ProductRepository productRepository;
-
-    @Autowired
-    public ProductController(ProductService productService, ProductRepository productRepository) {
-
-        this.productService = productService;
-        this.productRepository = productRepository;
-    }
+    private final MessageSource messageSource;
 
     @GetMapping("getAll")
     public List<ProductForListingDto> getAll() {
@@ -50,7 +48,7 @@ public class ProductController {
         product.setUnitsOnOrder(productForUpdateDto.getUnitsOnOrder());
         product.setDiscontinued(0);
         productService.update(id,productForUpdateDto);
-        return new ResponseEntity("Ürün güncellendi.",HttpStatus.CREATED);
+        return new ResponseEntity(messageSource.getMessage("productUpdated",new Object[]{id}, LocaleContextHolder.getLocale()),HttpStatus.CREATED);
 
     }
 
@@ -58,13 +56,13 @@ public class ProductController {
     @PostMapping("add")
     public ResponseEntity<String> addProductDto(@RequestBody @Valid ProductForAddDto productForAddDtoDto) {
         productService.add(productForAddDtoDto);
-        return ResponseEntity.ok("Ürün başarıyla eklendi.");
+        return ResponseEntity.ok(messageSource.getMessage("productAdded",null,LocaleContextHolder.getLocale()));
     }
     @DeleteMapping("delete")
     public ResponseEntity delete(@RequestBody ProductForDeleteDto productForDeleteDto){
         short id=productForDeleteDto.getProductId();
         productService.delete(id);
-        return new ResponseEntity("Ürün silindi",HttpStatus.CREATED);
+        return new ResponseEntity(messageSource.getMessage("productDeleted",new Object[]{id},LocaleContextHolder.getLocale()),HttpStatus.CREATED);
     }
 
     //DERİVED QUERY METHODS

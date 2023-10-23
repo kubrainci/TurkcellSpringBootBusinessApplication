@@ -1,33 +1,32 @@
-package Turkcellbootcamp.Springstart.entities;
+package Turkcellbootcamp.Springstart.entities.concretes;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "suppliers")
-public class Supplier {
-
+@Table(name = "customers")
+@Builder
+public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "supplier_id")
-    private short supplierId;
+    @Column(name = "customer_id")
+    private String customerId;
 
     @Column(name = "company_name")
-    private String company_name;
+    private String companyName;
 
     @Column(name = "contact_name")
-    private String contact_name;
+    private String contactName;
 
     @Column(name = "contact_title")
-    private String contact_title;
+    private String contactTitle;
 
     @Column(name = "address")
     private String address;
@@ -39,7 +38,7 @@ public class Supplier {
     private String region;
 
     @Column(name = "postal_code")
-    private String postal_code;
+    private String postalCode;
 
     @Column(name = "country")
     private String country;
@@ -48,15 +47,14 @@ public class Supplier {
     private String phone;
 
     @Column(name = "fax")
-    private  String fax;
-
-    @Column(name = " homepage")
-    private  String  homepage;
-
-    @OneToMany(mappedBy = "supplier")
-    private List<Product> products;
+    private String fax;
 
 
+    //bağlantı kısmı
+    @OneToMany(mappedBy = "customer")
+    private List<Order>orders;
 
+    @OneToMany(mappedBy = "customer")
+    private  List<CustomerCustomerDemo>customerCustomerDemos;
 
 }

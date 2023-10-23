@@ -1,7 +1,7 @@
 package Turkcellbootcamp.Springstart.business.abstracts;
 
 
-import Turkcellbootcamp.Springstart.entities.Category;
+import Turkcellbootcamp.Springstart.entities.concretes.Category;
 import Turkcellbootcamp.Springstart.entities.dtos.CategoryDtos.CategoryForAddDto;
 import Turkcellbootcamp.Springstart.entities.dtos.CategoryDtos.CategoryForListingDto;
 import Turkcellbootcamp.Springstart.entities.dtos.CategoryDtos.CategoryForUpdateDto;
@@ -14,7 +14,7 @@ import java.util.List;
 public interface CategoryService {
 
     //SERVİSLER DTOLARLA İLİŞKİ KURMALIDIR
-    //Result add(Category category);
+
      void add(CategoryForAddDto categoryForAddDto);
      void update(CategoryForUpdateDto categoryForUpdateDto);
      void delete(int id);

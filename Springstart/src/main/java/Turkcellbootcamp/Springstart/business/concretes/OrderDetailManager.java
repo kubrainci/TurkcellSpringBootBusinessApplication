@@ -2,9 +2,9 @@ package Turkcellbootcamp.Springstart.business.concretes;
 
 import Turkcellbootcamp.Springstart.business.abstracts.OrderDetailService;
 import Turkcellbootcamp.Springstart.business.abstracts.ProductService;
-import Turkcellbootcamp.Springstart.entities.Order;
-import Turkcellbootcamp.Springstart.entities.OrderDetail;
-import Turkcellbootcamp.Springstart.entities.Product;
+import Turkcellbootcamp.Springstart.entities.concretes.Order;
+import Turkcellbootcamp.Springstart.entities.concretes.OrderDetail;
+import Turkcellbootcamp.Springstart.entities.concretes.Product;
 import Turkcellbootcamp.Springstart.entities.dtos.OrderDetailDtos.OrderDetailForAddDto;
 import Turkcellbootcamp.Springstart.repositories.OrderDetailRepository;
 import lombok.RequiredArgsConstructor;

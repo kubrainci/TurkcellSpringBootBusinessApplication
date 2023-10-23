@@ -2,35 +2,28 @@ package Turkcellbootcamp.Springstart.business.concretes;
 
 import Turkcellbootcamp.Springstart.business.abstracts.CategoryService;
 import Turkcellbootcamp.Springstart.core.exceptions.BusinessException;
-import Turkcellbootcamp.Springstart.entities.Category;
+import Turkcellbootcamp.Springstart.entities.concretes.Category;
 import Turkcellbootcamp.Springstart.entities.dtos.CategoryDtos.CategoryForAddDto;
 import Turkcellbootcamp.Springstart.entities.dtos.CategoryDtos.CategoryForListingDto;
 import Turkcellbootcamp.Springstart.entities.dtos.CategoryDtos.CategoryForUpdateDto;
 import Turkcellbootcamp.Springstart.repositories.CategoryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-
+@RequiredArgsConstructor
 public class CategoryManager implements CategoryService {
     private final CategoryRepository categoryRepository;
+    private final MessageSource messageSource;
 
     @Autowired
 
-    public CategoryManager(CategoryRepository categoryRepository) {
 
-        this.categoryRepository = categoryRepository;
-    }
-
-   /* @Override
-    public Result add(Category category) {
-        categoryRepository.save(category);
-        return null;
-
-    }*/
-
-    @Override
+     @Override
     public List<CategoryForListingDto>getAll(){
 
         return categoryRepository.getForListing();
@@ -69,14 +62,14 @@ public class CategoryManager implements CategoryService {
 
     private void categoryNameLengthExceeded(String categoryName, int maxLength) {
         if (categoryName.length()>=maxLength){
-            throw new BusinessException("Kategori adı en fazla"+maxLength+"karakter uzunluğunda olmalıdır.");
+            throw new BusinessException(messageSource.getMessage("categoryNameLengthExceeded",new Object[]{maxLength},LocaleContextHolder.getLocale()));
         }
 
     }
     private void categoryWithSameNameShouldNotExist(String categoryName) {
         Category categoryWithSameName = categoryRepository.findByCategoryName(categoryName);
         if(categoryWithSameName != null){
-            throw new BusinessException("Aynı kategori isminden iki kategori bulunamaz.Kategori isimleri benzersiz olmalıdır.");
+            throw new BusinessException(messageSource.getMessage("categoryWithSameNameShouldNotExist",null, LocaleContextHolder.getLocale()));
         }
     }
 
@@ -91,7 +84,7 @@ public class CategoryManager implements CategoryService {
     private Category returnCategoryByIdIfExist(int categoryId) {
         Category category=categoryRepository.findById(categoryId).orElse(null);
         if (category==null)
-            throw new BusinessException("Böyle bir kategori bulunamadı.");
+            throw new BusinessException(messageSource.getMessage("returnCategoryByIdIfExist",null,LocaleContextHolder.getLocale()));
         return category;
     }
 

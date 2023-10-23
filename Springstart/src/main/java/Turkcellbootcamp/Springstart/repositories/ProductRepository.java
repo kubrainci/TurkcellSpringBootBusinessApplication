@@ -1,6 +1,6 @@
 package Turkcellbootcamp.Springstart.repositories;
 
-import Turkcellbootcamp.Springstart.entities.Product;
+import Turkcellbootcamp.Springstart.entities.concretes.Product;
 import Turkcellbootcamp.Springstart.entities.dtos.ProductDtos.ProductForGetByIdDto;
 import Turkcellbootcamp.Springstart.entities.dtos.ProductDtos.ProductForListingDto;
 import org.springframework.data.jpa.repository.JpaRepository;

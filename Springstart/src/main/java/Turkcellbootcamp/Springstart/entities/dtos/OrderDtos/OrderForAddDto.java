@@ -23,9 +23,9 @@ public class OrderForAddDto {
     private LocalDate shippedDate;
     private float freight;
     private String shipName;
-    @NotBlank(message = "Adres alanı girmek zorunludur.")
+    @NotBlank(message = "{mustHaveToEnterShipAddress}")
     private String shipAddress;
-    @NotBlank(message = "Şehir adı yazmak zorunludur.")
+    @NotBlank(message = "{mustHaveToWriteTheCityName}")
     private String shipCity;
     private String customerId;
     private short employeeId;

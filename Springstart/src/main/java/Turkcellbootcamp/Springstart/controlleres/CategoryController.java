@@ -1,13 +1,16 @@
 package Turkcellbootcamp.Springstart.controlleres;
 
 import Turkcellbootcamp.Springstart.business.abstracts.CategoryService;
-import Turkcellbootcamp.Springstart.entities.Category;
+import Turkcellbootcamp.Springstart.entities.concretes.Category;
 import Turkcellbootcamp.Springstart.entities.dtos.CategoryDtos.CategoryForAddDto;
 import Turkcellbootcamp.Springstart.entities.dtos.CategoryDtos.CategoryForListingDto;
 import Turkcellbootcamp.Springstart.entities.dtos.CategoryDtos.CategoryForUpdateDto;
 import Turkcellbootcamp.Springstart.repositories.CategoryRepository;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,17 +19,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("category")
+@RequiredArgsConstructor
 
 public class CategoryController {
     private  final  CategoryService categoryService;
     private final CategoryRepository categoryRepository;
+    private final MessageSource messageSource;
 
-    @Autowired
-    public CategoryController(CategoryService categoryService, CategoryRepository categoryRepository) {
-
-        this.categoryService = categoryService;
-        this.categoryRepository = categoryRepository;
-    }
     //İSTEKLER
     @GetMapping("getAll")
     public List<CategoryForListingDto> getAll(){
@@ -46,18 +45,19 @@ public class CategoryController {
 
              categoryService.add(categoryForAddDto);
 
-        return new ResponseEntity("Kategori eklendi ", HttpStatus.CREATED);
+        return new ResponseEntity(messageSource.getMessage("categoryAdded",new Object[]{ categoryForAddDto.getCategoryName()}, LocaleContextHolder.getLocale()),HttpStatus.CREATED);
      }
+     /*"Kategori eklendi ", HttpStatus.CREATED*/
      @DeleteMapping("delete")
      public ResponseEntity delete(@RequestParam ("id")int id){
         categoryService.delete(id);
-        return new ResponseEntity("Kategori silindi.",HttpStatus.CREATED);
+        return new ResponseEntity(messageSource.getMessage("categoryDeleted",new Object[]{id},LocaleContextHolder.getLocale()),HttpStatus.CREATED);
      }
 
      @PutMapping("update")
      public  ResponseEntity update(@RequestParam("id") int id, @RequestBody @Valid CategoryForUpdateDto categoryForUpdateDto){
         categoryService.update(categoryForUpdateDto);
-        return new ResponseEntity("Kategori güncellendi.",HttpStatus.CREATED);
+        return new ResponseEntity(messageSource.getMessage("categoryUpdated",new Object[]{id},LocaleContextHolder.getLocale()),HttpStatus.CREATED);
      }
 
 

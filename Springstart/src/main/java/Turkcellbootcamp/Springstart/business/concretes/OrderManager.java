@@ -2,9 +2,7 @@ package Turkcellbootcamp.Springstart.business.concretes;
 
 import Turkcellbootcamp.Springstart.business.abstracts.OrderDetailService;
 import Turkcellbootcamp.Springstart.business.abstracts.OrderService;
-import Turkcellbootcamp.Springstart.entities.Category;
-import Turkcellbootcamp.Springstart.entities.Order;
-import Turkcellbootcamp.Springstart.entities.dtos.CategoryDtos.CategoryForAddDto;
+import Turkcellbootcamp.Springstart.entities.concretes.Order;
 import Turkcellbootcamp.Springstart.entities.dtos.OrderDtos.OrderForAddDto;
 import Turkcellbootcamp.Springstart.repositories.OrderRepository;
 import jakarta.transaction.Transactional;

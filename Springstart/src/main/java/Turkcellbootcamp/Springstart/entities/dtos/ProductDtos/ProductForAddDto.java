@@ -12,11 +12,11 @@ import lombok.Data;
 
 
 public class ProductForAddDto {
-    @NotBlank(message = "Ürün ismi boş bırakılamaz")
+    @NotBlank(message = "{productNameCannotBeLeftBlank}")
     private String productName;
     private String quantityPerUnit;
-    @NotNull(message = "Ürün fiyatı boş bırakılamaz.")
-    @Min(value = 1,message = "Ürün fiyatı minimum 1 olmalıdır.")
+    @NotNull(message = "{productUnitPriceCannotBeLeftBlank}")
+    @Min(value = 1,message = "{productUnitPriceMinimumShouldBeOne.}")
     private float unitPrice;
     private short unitsInStock;
     private short unitsOnOrder;

@@ -1,4 +1,4 @@
-package Turkcellbootcamp.Springstart.entities;
+package Turkcellbootcamp.Springstart.entities.concretes;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
