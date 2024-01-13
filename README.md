@@ -1,4 +1,3 @@
 # TurkcellSpringBootBusinessApplication
 
-Bu projede Turkcell java bootcamp programında yapmış olduğum spring destekli İntellij İdea ve postgreSql bağlantısı sonrası projeme Requestleri(Post,Put,Get,Delete) ekleyerek
-web üzerinde isteklerimizin çalışmasını sağlayacak kodları üretmiş bulunmaktayım.
+In this project, I added Requests (Post, Put, Get, Delete) to my project after the spring supported Intellij Idea and PostgreSql connection I made in the Turkcell Java bootcamp program.I have produced the codes to make our requests work on the web.
